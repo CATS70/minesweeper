@@ -286,14 +286,16 @@ class MinesweeperAI():
         #
         #Get the cells around the move
         cellneighborhood = self.neighborhood(cell)
+        #I use a deepcopy to avoid 'Set changed size during iteration' error
         temp_cellneighborhood=copy.deepcopy(cellneighborhood)
         #Add it in the knowledge base
 
         for mycell in cellneighborhood:
+            #Remove cells marked as safe
             if {mycell}.issubset(self.safes):
                 temp_cellneighborhood.difference_update({mycell})
 
-
+            # Remove cells marked as mines
             if {mycell}.issubset(self.mines):
                 temp_cellneighborhood.difference_update({mycell})
                 count-=1
